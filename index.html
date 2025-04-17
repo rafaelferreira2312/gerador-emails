@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gerador de Emails Únicos</title>
+  <title>🔐Gerador de Emails Únicos</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -78,34 +78,34 @@
   </style>
 </head>
 <body>
-  <h1>Gerador de Emails Únicos</h1>
+  <h1>📧 Gerador de Emails Únicos</h1>
   <div class="container">
-    <label for="nome">Digite um nome (opcional):</label>
+    <label for="nome">👨‍👨‍👧‍👦 Digite um nome (opcional):</label>
     <input type="text" id="nome" placeholder="Ex: João">
-
     <label for="quantidade">Quantidade a gerar (1-100):</label>
     <input type="number" id="quantidade" min="1" max="100" value="1">
-
-    <label for="servidor">Escolha o servidor de email:</label>
+    <label for="servidor">✉️ Escolha o servidor de email:</label>
     <select id="servidor">
       <option value="@gmail.com">@gmail.com</option>
       <option value="@outlook.com">@outlook.com</option>
       <option value="@hotmail.com">@hotmail.com</option>
       <option value="@yahoo.com">@yahoo.com</option>
     </select>
-
     <label for="padrao-email">Padrão de geração do email:</label>
     <select id="padrao-email">
       <option value="padrao1">Somente letras minúsculas</option>
       <option value="padrao2">Letras minúsculas e números</option>
       <option value="padrao3">Letras maiúsculas, minúsculas, números e caracteres especiais</option>
     </select>
-
+    <label for="padrao-senha">🔑 Padrão de geração da senha:</label>
+    <select id="padrao-senha">
+      <option value="senha1">Somente letras minúsculas</option>
+      <option value="senha2">Letras maiúsculas e minúsculas</option>
+      <option value="senha3">Letras maiúsculas, minúsculas, números e caracteres especiais</option>
+    </select>
     <label for="tamanho-senha">Quantidade de caracteres da senha (8-32):</label>
     <input type="number" id="tamanho-senha" min="8" max="32" value="10">
-
     <button onclick="gerarEmails()">Gerar Emails</button>
-
     <table id="resultado">
       <thead>
         <tr>
@@ -119,13 +119,13 @@
       </tbody>
     </table>
   </div>
-
   <script>
     function gerarEmails() {
-      const nome = document.getElementById('nome').value.trim();
+      const nomeDigitado = document.getElementById('nome').value.trim();
       const quantidade = parseInt(document.getElementById('quantidade').value);
       const servidor = document.getElementById('servidor').value;
       const padraoEmail = document.getElementById('padrao-email').value;
+      const padraoSenha = document.getElementById('padrao-senha').value;
       const tamanhoSenha = parseInt(document.getElementById('tamanho-senha').value);
 
       if (quantidade < 1 || quantidade > 100) {
@@ -142,8 +142,9 @@
       resultadoTbody.innerHTML = ''; // Limpa a tabela
 
       for (let i = 1; i <= quantidade; i++) {
-        const email = `${gerarNomeAleatorio(padraoEmail)}${servidor}`;
-        const senha = gerarSenhaAleatoria(tamanhoSenha);
+        const emailBase = gerarNomeAleatorio(padraoEmail, nomeDigitado); // Passa o nome digitado
+        const email = `${emailBase}${i}${servidor}`;
+        const senha = gerarSenhaAleatoria(tamanhoSenha, padraoSenha); // Gera a senha com base nos parâmetros
         const row = document.createElement('tr');
 
         const emailCell = document.createElement('td');
@@ -174,25 +175,30 @@
       }
     }
 
-    function gerarNomeAleatorio(padrao) {
+    function gerarNomeAleatorio(padrao, nomeDigitado) {
       const palavras = [
-        "Cristalino", "Fenomeno", "Celestial", "Misterioso", "Eterno", "Radiante", "Singular", "Inovador",
-        "Fantastico", "Enigmatico", "Vibrante", "Exuberante", "Impressionante", "Luminoso", "Brilhante",
-        "Extraordinario", "Maravilhoso", "Deslumbrante", "Incomparavel", "Glorioso", "Magnifico","Secreto", "Idoneidade"
+        "Quartel", "Soldado", "Sargento", "Tenente", "General", "Cristalino", "Fenomeno", "Celestial", "Misterioso", "Eterno", "Radiante", "Singular", "Inovador",
+        "Fantastico", "Enigmatico", "Vibrante", "Exuberante", "Impressionante", "Luminoso", "Brilhante", "Extraordinario", "Maravilhoso", "Deslumbrante", "Incomparavel", "Glorioso", "Magnifico"
       ];
       const numeros = "0123456789";
       const caracteresEspeciais = "_-.";
       let nome = "";
-      const tamanhoNome = Math.floor(Math.random() * 5) + 10; // Tamanho entre 10 e 15 caracteres
 
-      for (let i = 0; i < tamanhoNome; i++) {
-        const tipo = Math.floor(Math.random() * 3);
-        if (tipo === 0 && palavras.length > 0) {
-          nome += palavras[Math.floor(Math.random() * palavras.length)];
-        } else if (tipo === 1) {
-          nome += numeros.charAt(Math.floor(Math.random() * numeros.length));
-        } else {
-          nome += caracteresEspeciais.charAt(Math.floor(Math.random() * caracteresEspeciais.length));
+      // Se o usuário digitou um nome, usa-o como base
+      if (nomeDigitado) {
+        nome = nomeDigitado.toLowerCase().replace(/\s+/g, ''); // Remove espaços e converte para minúsculas
+      } else {
+        // Gera um nome aleatório se nenhum nome foi fornecido
+        const tamanhoNome = Math.floor(Math.random() * 5) + 10; // Tamanho entre 10 e 15 caracteres
+        for (let i = 0; i < tamanhoNome; i++) {
+          const tipo = Math.floor(Math.random() * 3);
+          if (tipo === 0 && palavras.length > 0) {
+            nome += palavras[Math.floor(Math.random() * palavras.length)];
+          } else if (tipo === 1) {
+            nome += numeros.charAt(Math.floor(Math.random() * numeros.length));
+          } else {
+            nome += caracteresEspeciais.charAt(Math.floor(Math.random() * caracteresEspeciais.length));
+          }
         }
       }
 
@@ -208,12 +214,21 @@
       return nome;
     }
 
-    function gerarSenhaAleatoria(tamanho) {
-      const caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+    function gerarSenhaAleatoria(tamanho, padrao) {
+      let caracteres = "";
+      if (padrao === "senha1") {
+        caracteres = "abcdefghijklmnopqrstuvwxyz"; // Somente letras minúsculas
+      } else if (padrao === "senha2") {
+        caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"; // Letras maiúsculas e minúsculas
+      } else if (padrao === "senha3") {
+        caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()"; // Letras maiúsculas, minúsculas, números e caracteres especiais
+      }
+
       let senha = "";
       for (let i = 0; i < tamanho; i++) {
         senha += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
       }
+
       return senha;
     }
 
