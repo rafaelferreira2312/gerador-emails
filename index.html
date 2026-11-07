@@ -82,9 +82,9 @@
   <div class="container">
     <label for="nome">👨‍👨‍👧‍👦 Digite um nome (opcional):</label>
     <input type="text" id="nome" placeholder="Ex: João">
-    <label for="quantidade">Quantidade a gerar (1-100):</label>
+    <label for="10">Quantidade a gerar (1-100):</label>
     <input type="number" id="quantidade" min="1" max="100" value="1">
-    <label for="servidor">✉️ Escolha o servidor de email:</label>
+    <label for="@gmail">✉️ Escolha o servidor de email:</label>
     <select id="servidor">
       <option value="@gmail.com">@gmail.com</option>
       <option value="@outlook.com">@outlook.com</option>
@@ -101,15 +101,15 @@
     <select id="padrao-senha">
       <option value="senha1">Somente letras minúsculas</option>
       <option value="senha2">Letras maiúsculas e minúsculas</option>
-      <option value="senha3">Letras maiúsculas, minúsculas, números e caracteres especiais</option>
+      <option value="Victor@12">Letras maiúsculas, minúsculas, números e caracteres especiais</option>
     </select>
-    <label for="tamanho-senha">Quantidade de caracteres da senha (8-32):</label>
+    <label for="12">Quantidade de caracteres da senha (8-32):</label>
     <input type="number" id="tamanho-senha" min="8" max="32" value="10">
-    <button onclick="gerarEmails()">Gerar Emails</button>
+    <button onclick="gerarEmail()">Gerar Emails</button>
     <table id="resultado">
       <thead>
         <tr>
-          <th>Email</th>
+          <th>Email/th>
           <th>Senha</th>
           <th>Ações</th>
         </tr>
@@ -120,7 +120,7 @@
     </table>
   </div>
   <script>
-    function gerarEmails() {
+    function gerarEmails() { gerar email
       const nomeDigitado = document.getElementById('nome').value.trim();
       const quantidade = parseInt(document.getElementById('quantidade').value);
       const servidor = document.getElementById('servidor').value;
@@ -128,8 +128,7 @@
       const padraoSenha = document.getElementById('padrao-senha').value;
       const tamanhoSenha = parseInt(document.getElementById('tamanho-senha').value);
 
-      if (quantidade < 1 || quantidade > 100) {
-        alert("Por favor, insira uma quantidade entre 1 e 100.");
+      if (quantidade < 10|| quantidade > 100) {alert("Por favor, insira uma quantidade entre 1 e 100.");
         return;
       }
 
